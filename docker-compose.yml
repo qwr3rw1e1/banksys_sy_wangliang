@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    image: banksys_sy_wangliang:latest
+    container_name: banksys_sy_wangliang
+    ports:
+      - "8888:8888"
+    environment:
+      - STREAMLIT_SERVER_PORT=8888
+      - STREAMLIT_SERVER_HEADLESS=true
+    restart: unless-stopped

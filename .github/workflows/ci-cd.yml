@@ -63,12 +63,26 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - name: Deploy to server
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
         run: |
+          set -e
           mkdir -p ~/.ssh
-          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -i ~/.ssh/deploy_key \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+          ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null 2>&1 || {
+            echo "::error::SSH key validation failed. The SSH_PRIVATE_KEY secret may be malformed."
+            echo "Key first line: $(head -1 ~/.ssh/deploy_key)"
+            echo "Key line count: $(wc -l < ~/.ssh/deploy_key)"
+            exit 1
+          }
+          ssh -o StrictHostKeyChecking=no \
+              -o ConnectTimeout=10 \
+              -o ServerAliveInterval=30 \
+              -i ~/.ssh/deploy_key \
+              "${SSH_USER}@${SSH_HOST}" "
+            set -e
             docker pull ghcr.io/qwr3rw1e1/banksys_sy_wangliang:latest
             docker stop banksys_sy_wangliang 2>/dev/null || true
             docker rm banksys_sy_wangliang 2>/dev/null || true

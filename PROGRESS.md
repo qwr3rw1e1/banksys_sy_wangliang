@@ -74,7 +74,7 @@
 |----|------|------|------|
 | T-5.1 | 全量 `pytest` 通过 | ✅ | 27/27 通过，覆盖率 72% |
 | T-5.2 | 全量 `ruff check` 零告警 | ✅ | |
-| T-5.3 | Docker 构建 + 启动验证 | ⬜ | 需本地 Docker 环境 |
+| T-5.3 | Docker 构建 + 启动验证 | ✅ | CI/CD 已验证 build-and-push 成功 (2m37s)；本机未安装 Docker Desktop |
 | T-5.4 | Streamlit 启动验证 | ✅ | HTTP 200，两个页面正常 |
 | T-5.5 | CI/CD 流水线 GitHub Actions | ✅ | ✅ lint-test + build-push 均已通过 |
 | T-5.6 | GHCR 镜像推送 | ✅ | ghcr.io/qwr3rw1e1/banksys_sy_wangliang |

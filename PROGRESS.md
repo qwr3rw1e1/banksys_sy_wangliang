@@ -15,7 +15,7 @@
 | T-0.5 | 编写 `Dockerfile` + `docker-compose.yml` | ✅ | 多阶段构建，python:3.11-slim |
 | T-0.6 | 编写 `README.md` | ✅ | |
 | T-0.7 | 创建 `.github/workflows/ci-cd.yml` | ✅ | GHCR 推送 |
-| T-0.8 | 初始化 git 仓库 + 首次提交 | ⬜ | 待用户操作 |
+| T-0.8 | 初始化 git 仓库 + 首次提交 | ✅ | 已推送至 github.com/qwr3rw1e1/banksys_sy_wangliang |
 
 ---
 
@@ -74,9 +74,10 @@
 |----|------|------|------|
 | T-5.1 | 全量 `pytest` 通过 | ✅ | 27/27 通过，覆盖率 72% |
 | T-5.2 | 全量 `ruff check` 零告警 | ✅ | |
-| T-5.3 | Docker 构建 + 启动验证 | ⬜ | 需 Docker 环境 |
+| T-5.3 | Docker 构建 + 启动验证 | ⬜ | 需本地 Docker 环境 |
 | T-5.4 | Streamlit 启动验证 | ✅ | HTTP 200，两个页面正常 |
-| T-5.5 | 提交 PR，验证 CI/CD 流水线 | ⬜ | 待推送到 GitHub |
+| T-5.5 | CI/CD 流水线 GitHub Actions | ✅ | ✅ lint-test + build-push 均已通过 |
+| T-5.6 | GHCR 镜像推送 | ✅ | ghcr.io/qwr3rw1e1/banksys_sy_wangliang |
 
 ---
 

@@ -47,36 +47,27 @@ def render() -> None:
 
         input_data: dict = {}
 
-        # Numeric inputs
+        # Numeric inputs — each tuple: (min, max, default, step)
+        numeric_config: dict[str, tuple] = {
+            "age":                 (18,    95,    40,    1),
+            "duration":            (0,     5000,  300,   1),
+            "campaign":            (1,     50,    2,     1),
+            "pdays":               (0,     999,   999,   1),
+            "previous":            (0,     30,    0,     1),
+            "emp_var_rate":        (-5.0,  5.0,   0.0,   0.1),
+            "cons_price_index":    (90.0,  100.0, 94.0,  0.01),
+            "cons_conf_index":     (-60.0, -20.0, -40.0, 0.1),
+            "lending_rate3m":      (0.0,   10.0,  2.0,   0.01),
+            "nr_employed":         (4000.0, 6000.0, 5000.0, 10.0),
+        }
+
         st.markdown("**数值特征**")
         num_cols = st.columns(3)
         for i, feat in enumerate(NUMERIC_FEATURES):
             label = FEATURE_LABELS.get(feat, feat)
-            # Use sensible defaults/ranges
-            default = 0
-            step = 1.0
-            if feat == "age":
-                min_v, max_v, default = 18, 95, 40
-            elif feat == "duration":
-                min_v, max_v, default, step = 0, 5000, 300, 10.0
-            elif feat == "campaign":
-                min_v, max_v, default = 1, 50, 2
-            elif feat == "pdays":
-                min_v, max_v, default = 0, 999, 999
-            elif feat == "previous":
-                min_v, max_v, default = 0, 30, 0
-            elif feat == "emp_var_rate":
-                min_v, max_v, default, step = -5.0, 5.0, 0.0, 0.1
-            elif feat == "cons_price_index":
-                min_v, max_v, default, step = 90.0, 100.0, 94.0, 0.01
-            elif feat == "cons_conf_index":
-                min_v, max_v, default, step = -60.0, -20.0, -40.0, 0.1
-            elif feat == "lending_rate3m":
-                min_v, max_v, default, step = 0.0, 10.0, 2.0, 0.01
-            elif feat == "nr_employed":
-                min_v, max_v, default, step = 4000.0, 6000.0, 5000.0, 10.0
-            else:
-                min_v, max_v = 0, 100000
+            min_v, max_v, default, step = numeric_config.get(
+                feat, (0, 100000, 0, 1),
+            )
             input_data[feat] = num_cols[i % 3].number_input(
                 label, min_value=min_v, max_value=max_v,
                 value=default, step=step, key=feat,

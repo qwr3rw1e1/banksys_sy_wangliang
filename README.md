@@ -69,7 +69,7 @@ standards/      # 项目规范文档
 
 ## CI/CD
 
-![CI/CD Pipeline](https://github.com/<user>/banksys_sy_wangliang/actions/workflows/ci-cd.yml/badge.svg)
+![CI/CD Pipeline](https://github.com/qwr3rw1e1/banksys_sy_wangliang/actions/workflows/ci-cd.yml/badge.svg)
 
 - push / PR → ruff lint → pytest → Docker build → push to GHCR
 

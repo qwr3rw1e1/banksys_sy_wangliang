@@ -56,3 +56,25 @@ jobs:
           tags: |
             ${{ env.DOCKER_IMAGE }}:latest
             ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker pull ghcr.io/qwr3rw1e1/banksys_sy_wangliang:latest
+            docker stop banksys_sy_wangliang 2>/dev/null || true
+            docker rm banksys_sy_wangliang 2>/dev/null || true
+            docker run -d \
+              --name banksys_sy_wangliang \
+              --restart unless-stopped \
+              -p 8888:8888 \
+              ghcr.io/qwr3rw1e1/banksys_sy_wangliang:latest
+            echo "Deploy completed — http://117.72.172.21:8888"
